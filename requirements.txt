@@ -43,6 +43,7 @@ pathspec
 patsy
 platformdirs
 pluggy
+pre-commit
 protobuf
 py
 pycodestyle
