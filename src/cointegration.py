@@ -21,7 +21,7 @@ def calculate_half_life(spread):
     spread_lag2 = sm.add_constant(spread_lag)
     model = sm.OLS(spread_ret, spread_lag2)
     res = model.fit()
-    half_life = round(-np.log(2) / res.params[1], 0)
+    half_life = round(-np.log(2) / res.params.iloc[1], 0)
     return half_life
 
 
@@ -35,8 +35,8 @@ def calculate_zscore(spread):
 
 
 def calculate_cointegration(series_1, series_2):
-    series_1 = np.array(series_1).astype(np.float)
-    series_2 = np.array(series_2).astype(np.float)
+    series_1 = np.array(series_1).astype(float)
+    series_2 = np.array(series_2).astype(float)
     coint_t, p_value, crit = coint(series_1, series_2)
     critical_value = crit[1]
     model = sm.OLS(series_1, series_2).fit()
