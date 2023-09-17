@@ -22,10 +22,8 @@ def connect_dydx():
         default_ethereum_address=constants.ETHEREUM_ADDRESS,
         web3=Web3(Web3.HTTPProvider(constants.HTTP_PROVIDER)),
     )
-    # Assert client connection
     account = client.private.get_account()
     account_id = account.data["account"]["id"]
-    assert account_id
     quote_balance = account.data["account"]["quoteBalance"]
     print(f"account_id: {account_id}")  # @todo debug
     print(f"quote_balance: {quote_balance}")  # @todo debug
@@ -51,10 +49,8 @@ def connect_mainnet_dydx():
         default_ethereum_address=constants.ETHEREUM_ADDRESS_MAINNET,
         web3=Web3(Web3.HTTPProvider(constants.HTTP_PROVIDER_MAINNET)),
     )
-    # Assert client connection
     account = client.private.get_account()
     account_id = account.data["account"]["id"]
-    assert account_id
     quote_balance = account.data["account"]["quoteBalance"]
     print(f"account_id: {account_id}")
     print(f"quote_balance: {quote_balance}")
