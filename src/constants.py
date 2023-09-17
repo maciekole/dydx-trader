@@ -4,6 +4,8 @@ from dydx3.constants import API_HOST_GOERLI, API_HOST_MAINNET
 # MODE SELECTION
 # MODE="DEV" or MODE="PROD"
 MODE = "DEV"
+ORDERS_LOG = config("ORDERS_LOG")
+ORDERS_LOG_PATH = None if not ORDERS_LOG else config("ORDERS_LOG_PATH")
 
 # Close all open positions and orders
 ABORT_ALL_POSITIONS = True

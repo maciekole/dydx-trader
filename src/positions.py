@@ -3,12 +3,20 @@ from datetime import datetime, timedelta
 
 from dydx3.errors import DydxApiError
 
-from utils import format_number
+from constants import ORDERS_LOG
+from utils import format_number, log_order
 
 
 # Place order
 def place_market_order(
-    client, market, side, size, price, limit_fee="0.015", reduce_only=False
+    client,
+    market,
+    side,
+    size,
+    price,
+    limit_fee="0.015",
+    reduce_only=False,
+    log_order=False,
 ):
     print("place_market_order()")  # @todo debug
     # print(f"place_market_order(\n"
@@ -60,7 +68,10 @@ def place_market_order(
         reduce_only=reduce_only,
     )
     print(f"placed_order.id: {placed_order.data['order']['id']}")
-    return placed_order.data
+    placed_order_data = placed_order.data
+    if ORDERS_LOG and log_order:
+        log_order(placed_order_data["order"])
+    return placed_order_data
 
 
 # Abort all open positions
@@ -123,4 +134,6 @@ def abort_all_positions(client):
     print(f"closed_orders: {len(closed_orders)}")  # @todo debug
     if error_orders:
         print(f"error_orders: {len(error_orders)}")  # @todo debug
+    if ORDERS_LOG:
+        log_order([d["order"] for d in closed_orders])
     return closed_orders, error_orders
