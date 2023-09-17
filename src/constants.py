@@ -8,7 +8,8 @@ ORDERS_LOG = config("ORDERS_LOG")
 ORDERS_LOG_PATH = None if not ORDERS_LOG else config("ORDERS_LOG_PATH")
 
 # Close all open positions and orders
-ABORT_ALL_POSITIONS = True
+# ABORT_ALL_POSITIONS = True
+ABORT_ALL_POSITIONS = False
 
 # Find integrated pairs
 FIND_INTEGRATED = True
@@ -17,7 +18,7 @@ FIND_INTEGRATED = True
 PLACE_TRADES = True
 
 # Resolution
-RESOLUTION = "1hrs"
+RESOLUTION = "1HOUR"
 
 # Stats window
 WINDOW = 24
