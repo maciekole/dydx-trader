@@ -11,7 +11,7 @@ ISO_TIMES = {}
 
 # Get candles historical
 def get_candles_historical(client, market, limit=100):
-    print("get_candles_historical()")  # @todo debug
+    print(f"get_candles_historical(market={market})")  # @todo debug
     iso_times = [t_range for t_range in get_iso_times_ranges()]
     close_prices = []
 
@@ -46,7 +46,7 @@ def get_candles_historical(client, market, limit=100):
 
 
 # Construct market prices
-def construct_market_prices(client) -> pd.DataFrame:
+def construct_market_prices(client, limit=None) -> pd.DataFrame:
     print("construct_market_prices()")  # @todo debug
     tradeable_markets = []
     markets = client.public.get_markets()
@@ -65,8 +65,14 @@ def construct_market_prices(client) -> pd.DataFrame:
     df = pd.DataFrame(close_prices)
     df.set_index("datetime", inplace=True)
 
+    left_tradeable_markets = tradeable_markets[1:]
+    if limit is not None and limit >= 2:
+        if limit <= len(tradeable_markets):
+            left_tradeable_markets = tradeable_markets[1:limit]
+
+    print(f"left_tradeable_markets: {len(left_tradeable_markets)}")
     # Append other prices
-    for market in tradeable_markets[1:5]:
+    for market in left_tradeable_markets:
         close_prices_add = get_candles_historical(client, market)
         df_add = pd.DataFrame(close_prices_add)
         df_add.set_index("datetime", inplace=True)
