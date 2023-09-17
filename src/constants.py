@@ -6,7 +6,7 @@ from dydx3.constants import API_HOST_GOERLI, API_HOST_MAINNET
 MODE = "DEV"
 
 # Close all open positions and orders
-ABORT_ALL_POSITIONS = False
+ABORT_ALL_POSITIONS = True
 
 # Find integrated pairs
 FIND_INTEGRATED = True
