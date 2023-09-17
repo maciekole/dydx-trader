@@ -13,10 +13,6 @@ def format_number(curr_num, match_num) -> str:
     :param match_num:
     :return:
     """
-    # print(f"format_number(\n"
-    #       f"  curr_num={curr_num},\n"
-    #       f"  match_num={match_num}\n)")  # @todo debug
-    # curr_num_str = f"{curr_num}"
     match_num_str = f"{match_num}"
 
     if "." in match_num_str:

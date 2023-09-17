@@ -18,15 +18,7 @@ def place_market_order(
     reduce_only=False,
     log_order=False,
 ):
-    print("place_market_order()")  # @todo debug
-    # print(f"place_market_order(\n"
-    #       f"  client={client},\n"
-    #       f"  market={market},\n"
-    #       f"  side={side},\n"
-    #       f"  size={size},\n"
-    #       f"  price={price},\n"
-    #       f"  limit_fee={limit_fee},\n"
-    #       f"  reduce_only={reduce_only}\n)")  # @todo debug
+    print("place_market_order()")
     # Get PositionId
     account_response = client.private.get_account()
     position_id = account_response.data["account"]["positionId"]
@@ -76,29 +68,26 @@ def place_market_order(
 
 # Abort all open positions
 def abort_all_positions(client):
-    print("abort_all_positions()")  # @todo debug
-    # print(f"abort_all_positions(\n"
-    #       f"  client={client}\n)")  # @todo debug
+    print("abort_all_positions()")
     client.private.cancel_all_orders()
     time.sleep(0.75)  # Protect API
 
     # Get markets for reference of tick size
     markets = client.public.get_markets().data
     time.sleep(0.75)  # Protect API
-    # pprint(markets)  # @todo debug
 
     # Get all open positions
     positions = client.private.get_positions(status="OPEN")
     all_positions = positions.data["positions"]
-    print(f"all_positions to abort: {len(all_positions)}")  # @todo debug
+    print(f"all_positions to abort: {len(all_positions)}")
 
     closed_orders = []
     error_orders = []
     for position in all_positions:
         market = position["market"]
         side = "SELL" if position["side"] == "LONG" else "BUY"
-        print(f"position: {position}")  # @todo debug
-        print(f"market: {market}, side: {side}")  # @todo debug
+        print(f"position: {position}")
+        print(f"market: {market}, side: {side}")
 
         # Get price
         price = float(position["entryPrice"])
@@ -131,9 +120,9 @@ def abort_all_positions(client):
             closed_orders.append(order)
         time.sleep(0.25)  # Protect API
 
-    print(f"closed_orders: {len(closed_orders)}")  # @todo debug
+    print(f"closed_orders: {len(closed_orders)}")
     if error_orders:
-        print(f"error_orders: {len(error_orders)}")  # @todo debug
+        print(f"error_orders: {len(error_orders)}")
     if ORDERS_LOG:
         log_order([d["order"] for d in closed_orders])
     return closed_orders, error_orders

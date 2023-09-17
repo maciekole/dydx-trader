@@ -38,7 +38,7 @@ def connect_mainnet_dydx():
 
     :return:
     """
-    print("connect_mainnet_dydx()")  # @todo debug
+    print("connect_mainnet_dydx()")
     client = Client(
         host=constants.API_HOST_MAINNET,
         api_key_credentials={
@@ -56,7 +56,7 @@ def connect_mainnet_dydx():
     account_id = account.data["account"]["id"]
     assert account_id
     quote_balance = account.data["account"]["quoteBalance"]
-    print(f"account_id: {account_id}")  # @todo debug
-    print(f"quote_balance: {quote_balance}")  # @todo debug
+    print(f"account_id: {account_id}")
+    print(f"quote_balance: {quote_balance}")
 
     return client
