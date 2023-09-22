@@ -7,6 +7,15 @@ from constants import ORDERS_LOG
 from utils import format_number, log_order
 
 
+# Check order status
+def check_order_status(client, order_id):
+    order = client.private.get_order_by_id(order_id)
+    if order.data:
+        if "order" in order.data.keys():
+            return order.data["order"]["status"]
+    return "FAILED"
+
+
 # Place order
 def place_market_order(
     client,
@@ -126,3 +135,11 @@ def abort_all_positions(client):
     if ORDERS_LOG:
         log_order([d["order"] for d in closed_orders])
     return closed_orders, error_orders
+
+
+# Get existing open positions
+def is_open_positions(client, market):
+    time.sleep(0.25)
+    all_positions = client.private.get_positions(market=market, status="OPEN")
+
+    return len(all_positions.data["positions"]) > 0

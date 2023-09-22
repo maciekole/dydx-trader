@@ -1,5 +1,6 @@
 import time
 
+import numpy as np
 import pandas as pd
 
 from constants import RESOLUTION
@@ -85,3 +86,21 @@ def construct_market_prices(client, limit=None) -> pd.DataFrame:
         print(f"Drop NaNs columns: {nans}")
         df.drop(nans, inplace=True)
     return df
+
+
+# Get candles recent
+def get_candles_recent(client, market):
+    close_prices = []
+
+    time.sleep(0.25)  # Protect API
+
+    candles = client.public.get_candles(
+        market=market, resolution=RESOLUTION, limit=100
+    )
+
+    for candle in candles.data["candles"]:
+        close_prices.append(candle["close"])
+
+    close_prices.reverse()
+    prices_result = np.array(close_prices).astype(float)
+    return prices_result
