@@ -1,8 +1,11 @@
 import sys
+import time
 
 import constants
 from cointegration import store_cointegration_results
 from connections import connect_dydx
+from entry_pairs import open_positions
+from exit_pairs import manage_trade_exits
 from positions import abort_all_positions
 from public import construct_market_prices
 
@@ -44,3 +47,24 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"Error storing cointegrated pairs: {e}")
             sys.exit(1)
+
+    # Run always on
+    while True:
+        # Place trades for closing positions
+        if constants.MANAGE_EXITS:
+            try:
+                print("Manage exit opportunities...")
+                manage_trade_exits(client)
+            except Exception as e:
+                print(f"Error managing exiting positions: {e}")
+                sys.exit(1)
+
+        # Place trades for opening positions
+        if constants.PLACE_TRADES:
+            try:
+                print("Finding trading opportunities...")
+                open_positions(client)
+            except Exception as e:
+                print(f"Error trading pairs: {e}")
+                sys.exit(1)
+        time.sleep(60)
