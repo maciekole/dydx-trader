@@ -33,6 +33,16 @@ def open_positions(client):
 
     bot_agents = []
 
+    # Opening active trades JSON file
+    try:
+        open_positions_file = open(AGENTS_DATA_PATH)
+        open_positions_dict = json.load(open_positions_file)
+        for p in open_positions_dict:
+            bot_agents.append(p)
+    except Exception as e:
+        print(f"Exception opening file {AGENTS_DATA_PATH}: {e}")
+        bot_agents = []
+
     print(f"open_positions for {len(df.index)} market pairs")
     print("++++++++++++++++++++++++++++++++++++++++++++++++")
 
@@ -74,7 +84,7 @@ def open_positions(client):
                     accept_base_price = (
                         float(base_price) * 1.01
                         if z_score < 0
-                        else float(base_side) * 0.99
+                        else float(base_price) * 0.99
                     )
                     accept_quote_price = (
                         float(quote_price) * 1.01

@@ -27,7 +27,6 @@ def place_market_order(
     reduce_only=False,
     log_order=False,
 ):
-    print("place_market_order()")
     # Get PositionId
     account_response = client.private.get_account()
     position_id = account_response.data["account"]["positionId"]
