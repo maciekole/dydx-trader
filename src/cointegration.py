@@ -4,6 +4,7 @@ import statsmodels.api as sm
 from statsmodels.tsa.stattools import coint
 
 from constants import COINTEGRATED_DATA_PATH, MAX_HALF_LIFE, WINDOW
+from src.notifications.telegram import send_message
 
 
 def calculate_half_life(spread):
@@ -85,4 +86,5 @@ def store_cointegration_results(df_market_prices):
 
     # Return result
     print("Cointegrated pairs successfully saved")
+    send_message("Cointegrated pairs successfully saved")
     return "saved"

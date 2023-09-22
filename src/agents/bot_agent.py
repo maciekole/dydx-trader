@@ -2,6 +2,7 @@ import sys
 import time
 from datetime import datetime
 
+from src.notifications.telegram import send_message
 from src.positions import check_order_status, place_market_order
 
 
@@ -56,6 +57,7 @@ class BotAgent:
             "pair_status": "",
             "comments": "",
         }
+        self.EXIT_MSG = "Shutting down bot"
 
     # Check order status by ID
     def check_order_status_by_id(self, order_id):
@@ -154,6 +156,10 @@ class BotAgent:
             error = f"[ERROR] Market 2 {self.market_2}: Order error {e}."
             self.order_dict["comments"] = error
             print(error)
+            send_message(
+                f"Failed to execute. Code red! Error code: 102"
+                f"\n{error}\n{self.EXIT_MSG}"
+            )
             return self.order_dict
 
         order_status_m2 = self.check_order_status_by_id(
@@ -183,13 +189,17 @@ class BotAgent:
                     self.client, close_order["order"]["id"]
                 )
 
-                # @todo add explicit messaging about failed close_order !!
+                send_message("Failed to execute. Code red! Error code: 100")
 
                 if order_status_close_order != "FILLED":
                     print("[ERROR] ABORT PROGRAM. Unexpected Error")
                     print(order_status_close_order)
 
                     # send notification
+                    send_message(
+                        f"Failed to execute. Code red! Error code: "
+                        f"101\n{self.EXIT_MSG}"
+                    )
                     sys.exit(1)
             except Exception as e:
                 self.order_dict["pair_status"] = "ERROR"
@@ -198,6 +208,10 @@ class BotAgent:
                 print(error)
                 print("[ERROR] ABORT PROGRAM. Unexpected Error")
                 # send notification
+                send_message(
+                    f"Failed to execute. Code red! Error code: 102"
+                    f"\n{error}\n{self.EXIT_MSG}"
+                )
                 sys.exit(1)
         else:
             self.order_dict["pair_status"] = "LIVE"
