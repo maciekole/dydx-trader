@@ -19,7 +19,9 @@ FIND_INTEGRATED = True
 
 # Decide to place trades
 PLACE_TRADES = True
+# PLACE_TRADES = False
 MANAGE_EXITS = True
+# MANAGE_EXITS = False
 
 # Resolution
 RESOLUTION = "1HOUR"
@@ -88,3 +90,10 @@ else:
     DYDX_API_SECRET = DYDX_API_SECRET_TESTNET
     DYDX_API_PASSPHRASE = DYDX_API_PASSPHRASE_TESTNET
     HOST = API_HOST_GOERLI
+
+TELEGRAM_API_KEY = config("HTTP_API_TOKEN")
+TELEGRAM_CHAT_ID = config("TELEGRAM_CHAT_ID")
+TELEGRAM_URL = (
+    "https://api.telegram.org/bot{bot_token}/sendMessage"
+    "?chat_id={chat_id}&text={message}"
+)
