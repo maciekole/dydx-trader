@@ -10,15 +10,16 @@ COINTEGRATED_DATA_PATH = config("COINTEGRATED_DATA_PATH")
 AGENTS_DATA_PATH = f"""../{config("AGENTS_DATA_PATH")}"""
 
 # Close all open positions and orders
-# ABORT_ALL_POSITIONS = True
-ABORT_ALL_POSITIONS = False
+ABORT_ALL_POSITIONS = True
+# ABORT_ALL_POSITIONS = False
 
 # Find integrated pairs
-FIND_INTEGRATED = False
-# FIND_INTEGRATED = True
+# FIND_INTEGRATED = False
+FIND_INTEGRATED = True
 
 # Decide to place trades
 PLACE_TRADES = True
+MANAGE_EXITS = True
 
 # Resolution
 RESOLUTION = "1HOUR"
