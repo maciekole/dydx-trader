@@ -4,7 +4,7 @@ import statsmodels.api as sm
 from statsmodels.tsa.stattools import coint
 
 from constants import COINTEGRATED_DATA_PATH, MAX_HALF_LIFE, WINDOW
-from src.notifications.telegram import send_message
+from notifications.telegram import send_message
 
 
 def calculate_half_life(spread):

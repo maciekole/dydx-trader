@@ -7,7 +7,7 @@ MODE = "DEV"
 ORDERS_LOG = config("ORDERS_LOG")
 ORDERS_LOG_PATH = None if not ORDERS_LOG else config("ORDERS_LOG_PATH")
 COINTEGRATED_DATA_PATH = config("COINTEGRATED_DATA_PATH")
-AGENTS_DATA_PATH = f"""../{config("AGENTS_DATA_PATH")}"""
+AGENTS_DATA_PATH = f"""{config("AGENTS_DATA_PATH")}"""
 
 # Close all open positions and orders
 ABORT_ALL_POSITIONS = True
