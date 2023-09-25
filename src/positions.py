@@ -1,9 +1,10 @@
+import json
 import time
 from datetime import datetime, timedelta
 
 from dydx3.errors import DydxApiError
 
-from constants import ORDERS_LOG
+from constants import AGENTS_DATA_PATH, ORDERS_LOG
 from utils import format_number, log_order
 
 
@@ -133,6 +134,12 @@ def abort_all_positions(client):
         print(f"error_orders: {len(error_orders)}")
     if ORDERS_LOG:
         log_order([d["order"] for d in closed_orders])
+
+    bot_agents = []
+    if len(bot_agents) > 0:
+        with open(AGENTS_DATA_PATH, "w") as f:
+            json.dump(bot_agents, f)
+
     return closed_orders, error_orders
 
 
